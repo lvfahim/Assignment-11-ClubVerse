@@ -1,11 +1,19 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import WebSideLogo from '../WebSideLogo/WebSideLogo';
 import { AuthContext } from '../Provider/AuthProvider';
 import Img from '../assets/user.png';
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Navber = () => {
     const { user, LogOut } = useContext(AuthContext);
+    const Linkss = <>
+        <li data-tooltip-id="infoTip"
+            data-tooltip-content="Home"><NavLink to='/'>Home</NavLink></li>
+        <li data-tooltip-id="infoTip"
+            data-tooltip-content="About Us"><NavLink to='/aboutUs'>About Us</NavLink></li>
+    </>
 
     const handleLogOut = () => {
         LogOut()
@@ -30,8 +38,7 @@ const Navber = () => {
                         tabIndex="-1"
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
                     >
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 3</a></li>
+                        {Linkss}
                     </ul>
                 </div>
                 <Link to='/' className="btn btn-ghost text-xl">
@@ -41,8 +48,7 @@ const Navber = () => {
 
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 3</a></li>
+                    {Linkss}
                 </ul>
             </div>
 
@@ -51,7 +57,7 @@ const Navber = () => {
                 <div>
                     <img
                         className='w-12 rounded-full mx-2'
-                        src={user?.photoURL || Img} 
+                        src={user?.photoURL || Img}
                         alt={user?.displayName || "User"}
                     />
                 </div>

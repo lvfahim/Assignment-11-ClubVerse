@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 @plugin "daisyui" {
@@ -10,4 +12,12 @@
   default: true;
   --color-primary: #002455;
   --color-secondary: #8ABEB9;
+}
+
+* {
+  font-family: "Urbanist", sans-serif;
+}
+
+a.active{
+  @apply ml-3 bg-gradient-to-l to-[#8ABEB9] from-[#002455]  text-white py-2 px-3 font-semibold 
 }
