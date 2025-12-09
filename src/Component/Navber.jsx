@@ -8,12 +8,20 @@ import "react-tooltip/dist/react-tooltip.css";
 
 const Navber = () => {
     const { user, LogOut } = useContext(AuthContext);
+
     const Linkss = <>
-        <li data-tooltip-id="infoTip"
-            data-tooltip-content="Home"><NavLink to='/'>Home</NavLink></li>
-        <li data-tooltip-id="infoTip"
-            data-tooltip-content="About Us"><NavLink to='/aboutUs'>About Us</NavLink></li>
-    </>
+        <li data-tooltip-id="infoTip" data-tooltip-content="Home">
+            <NavLink to='/'>Home</NavLink>
+        </li>
+
+        <li data-tooltip-id="infoTip" data-tooltip-content="About Us">
+            <NavLink to='/aboutUs'>About Us</NavLink>
+        </li>
+
+        <li data-tooltip-id="infoTip" data-tooltip-content="Why Join">
+            <NavLink to='/whyJoin'>Why Join</NavLink>
+        </li>
+    </>;
 
     const handleLogOut = () => {
         LogOut()
@@ -80,6 +88,7 @@ const Navber = () => {
                         </Link>
                     )}
                 </div>
+                  <Tooltip id="infoTip" place="bottom" />
             </div>
         </div>
     );

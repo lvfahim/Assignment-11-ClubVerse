@@ -5,11 +5,14 @@ import Auth from "../Layout/Auth";
 import Login from "../AuthPage/Login";
 import Regester from "../AuthPage/Regester";
 import AboutUs from "../Page/AboutUs";
+import WhyJoin from "../Page/WhyJoin";
+import Error from "../Error And Loding Page/Error";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
+        errorElement:<Error></Error>,
         children: [
             {
                 path: '/',
@@ -18,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path:'/aboutUs',
                 element:<AboutUs></AboutUs>
+            },
+            {
+                path:'/whyJoin',
+                element:<WhyJoin></WhyJoin>
             }
         ]
     },
