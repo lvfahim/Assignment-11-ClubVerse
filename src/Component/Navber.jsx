@@ -5,9 +5,13 @@ import { AuthContext } from '../Provider/AuthProvider';
 import Img from '../assets/user.png';
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import Loding from '../Error And Loding Page/Loding';
 
 const Navber = () => {
-    const { user, LogOut } = useContext(AuthContext);
+    const { user, LogOut, loading } = useContext(AuthContext);
+    if(loading){
+        return <Loding></Loding>
+    }
 
     const Linkss = <>
         <li data-tooltip-id="infoTip" data-tooltip-content="Home">
@@ -20,6 +24,12 @@ const Navber = () => {
 
         <li data-tooltip-id="infoTip" data-tooltip-content="Why Join">
             <NavLink to='/whyJoin'>Why Join</NavLink>
+        </li>
+        <li data-tooltip-id="infoTip" data-tooltip-content="Why Join">
+            <NavLink to='/creatAClub'>Creat A Club</NavLink>
+        </li>
+        <li data-tooltip-id="infoTip" data-tooltip-content="Blog">
+            <NavLink to='/blog'>Blog</NavLink>
         </li>
     </>;
 
@@ -75,14 +85,14 @@ const Navber = () => {
                     {user ? (
                         <button
                             onClick={handleLogOut}
-                            className="btn bg-gradient-to-l to-[#8ABEB9] from-[#002455] text-xl text-white py-2 px-3"
+                            className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white py-2 px-3"
                         >
                             LogOut
                         </button>
                     ) : (
                         <Link
                             to="/auth/login"
-                            className="btn bg-gradient-to-l to-[#8ABEB9] from-[#002455] text-xl text-white py-2 px-3"
+                            className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white py-2 px-3"
                         >
                             Login
                         </Link>

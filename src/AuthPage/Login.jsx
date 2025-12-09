@@ -6,9 +6,11 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { AuthContext } from '../Provider/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../Hook/useAxiosSecure';
 
 
 const Login = () => {
+    const Axios = useAxiosSecure()
     const { register, handleSubmit, formState: { errors }, getValues } = useForm();
     const navigate = useNavigate()
     const location = useLocation()
@@ -49,6 +51,16 @@ const Login = () => {
         Google()
             .then(result => {
                 console.log(result)
+                const userInfo = {
+                    email: result.user.email,
+                    displayName: result.user.displayName,
+                    photoURL: result.user.photoURL
+                }
+                Axios.post('/users', userInfo)
+                    .then(res => {
+                        console.log('user data has been stored', res.data)
+                        navigate(location.state || '/');
+                    })
                 Swal.fire({
                     title: "Login Susseccfully",
                     icon: "success",
@@ -77,7 +89,17 @@ const Login = () => {
                             <div className="relative">
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    {...register("password", { required: true, minLength: 6 })}
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "Minimum 6 characters required"
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                                            message: "Must contain at least one uppercase & one lowercase letter"
+                                        }
+                                    })}
                                     className="input w-full pr-10"
                                     placeholder="Password"
                                 />
@@ -91,9 +113,10 @@ const Login = () => {
                                 </button>
                             </div>
 
-                            {errors.password?.type === 'required' &&
-                                <p className='text-red-500 '>Password is Require</p>
-                            }
+                            {/* Error Message */}
+                            {errors.password && (
+                                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                            )}
                             {errors.password?.type === 'minLength' &&
                                 <p className='text-red-500 '>Password most be 6 Characters</p>
                             }
@@ -106,7 +129,7 @@ const Login = () => {
                                     Forgot password?
                                 </button>
                             </div>
-                            <button className="btn bg-gradient-to-l to-[#8ABEB9] from-[#002455] text-xl text-white border-none btn-neutral mt-4">Login</button>
+                            <button className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white border-none btn-neutral mt-4">Login</button>
                             <h2>Don't have an account? <Link className='text-blue-500 underline' to='/auth/regester'>Register Now</Link></h2>
 
                         </fieldset>
@@ -116,7 +139,7 @@ const Login = () => {
                         <p className='text-2xl'>OR</p>
                         <p>....................................</p>
                     </div>
-                    <button onClick={heandleFormGoogle} className='btn border-none bg-gradient-to-l to-[#8ABEB9] from-[#002455]  text-white'><FcGoogle /> Login In With Google</button>
+                    <button onClick={heandleFormGoogle} className='btn border-none bg-linear-to-l to-[#8ABEB9] from-[#002455]  text-white'><FcGoogle /> Login In With Google</button>
                 </div>
                 <ToastContainer />
             </div>

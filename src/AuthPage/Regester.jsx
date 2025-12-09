@@ -7,13 +7,15 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../Hook/useAxiosSecure';
 
 
 const Regester = () => {
+    const Axios = useAxiosSecure()
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     const location = useLocation()
-    const { Register, setUser, UpData,Google } = useContext(AuthContext)
+    const { Register, setUser, UpData, Google } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false);
     const handleEye = (e) => {
         e.preventDefault();
@@ -29,10 +31,25 @@ const Regester = () => {
                 const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_hosting}`
                 axios.post(image_API_URL, formData)
                     .then(res => {
+                        const photoURL = res?.data?.data?.url;
+
+                        // create user in the database
+                        const userInfo = {
+                            email: data.email,
+                            displayName: data.name,
+                            photoURL: photoURL
+                        }
+                        Axios.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user created in the database');
+                                }
+                            })
                         const userProfile = {
                             displayName: data.name,
-                            photoURL: res.data.data.url
+                            photoURL:photoURL
                         }
+
                         UpData(userProfile)
                             .then(() => { })
                             .catch(error => console.log(error))
@@ -45,22 +62,33 @@ const Regester = () => {
             })
 
     }
-     const heandleFormGoogle = () => {
-            Google()
-                .then(result => {
-                    console.log(result)
-                    Swal.fire({
-                        title: "Login Susseccfully",
-                        icon: "success",
-                        draggable: true
-                    });
-                    navigate(`${location.state ? location.state : '/'}`)
-                })
-                .catch(error => {
-                    console.log(error)
-                    toast('Google login failed. Please try again.')
-                })
-        }
+    const heandleFormGoogle = () => {
+        Google()
+            .then(result => {
+                console.log(result)
+                  const userInfo = {
+                    email: result.user.email,
+                    displayName: result.user.displayName,
+                    photoURL: result.user.photoURL
+                }
+
+                Axios.post('/users', userInfo)
+                    .then(res => {
+                        console.log('user data has been stored', res.data)
+                        navigate(location.state || '/');
+                    })
+                Swal.fire({
+                    title: "Login Susseccfully",
+                    icon: "success",
+                    draggable: true
+                });
+                navigate(`${location.state ? location.state : '/'}`)
+            })
+            .catch(error => {
+                console.log(error)
+                toast('Google login failed. Please try again.')
+            })
+    }
     return (
         <div className="hero bg-[#cfea6100] min-h-screen">
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -86,7 +114,17 @@ const Regester = () => {
                             <div className="relative">
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    {...register("password", { required: true, minLength: 6 })}
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "Minimum 6 characters required"
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                                            message: "Must contain at least one uppercase & one lowercase letter"
+                                        }
+                                    })}
                                     className="input w-full pr-10"
                                     placeholder="Password"
                                 />
@@ -100,13 +138,15 @@ const Regester = () => {
                                 </button>
                             </div>
 
-                            {errors.password?.type === 'required' &&
-                                <p className='text-red-500 '>Password is Require</p>
-                            }
+                            {/* Error Message */}
+                            {errors.password && (
+                                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                            )}
+
                             {errors.password?.type === 'minLength' &&
                                 <p className='text-red-500 '>Password most be 6 Characters</p>
                             }
-                            <button className="btn bg-gradient-to-l to-[#8ABEB9] from-[#002455] text-xl text-white border-none btn-neutral mt-4">Register</button>
+                            <button className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white border-none btn-neutral mt-4">Register</button>
                             <h2>Don't have an account? <Link className='text-blue-500 underline' to='/auth/login'>Login Now</Link></h2>
                         </fieldset>
                     </form>
@@ -115,10 +155,10 @@ const Regester = () => {
                         <p className='text-2xl'>OR</p>
                         <p>....................................</p>
                     </div>
-                    <button onClick={heandleFormGoogle} className='btn border-none bg-gradient-to-l to-[#8ABEB9] from-[#002455]  text-white'><FcGoogle /> Login In With Google</button>
+                    <button onClick={heandleFormGoogle} className='btn border-none bg-linear-to-l to-[#8ABEB9] from-[#002455]  text-white'><FcGoogle /> Login In With Google</button>
                 </div>
             </div>
-             <ToastContainer />
+            <ToastContainer />
         </div>
 
     );

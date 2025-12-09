@@ -7,6 +7,9 @@ import Regester from "../AuthPage/Regester";
 import AboutUs from "../Page/AboutUs";
 import WhyJoin from "../Page/WhyJoin";
 import Error from "../Error And Loding Page/Error";
+import Blog from "../Page/Blog";
+import CreatClub from "../Page/CreatClub";
+import PrivetRouter from "../Provider/PrivetRouter";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +28,14 @@ const router = createBrowserRouter([
             {
                 path:'/whyJoin',
                 element:<WhyJoin></WhyJoin>
+            },
+            {
+                path:'/creatAClub',
+                element:<PrivetRouter><CreatClub></CreatClub></PrivetRouter>
+            },
+            {
+                path:'/blog',
+                element:<Blog></Blog>
             }
         ]
     },

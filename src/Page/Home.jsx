@@ -1,9 +1,12 @@
 import React from 'react';
+import Hero from './PageComponet/Hero';
+import WhoItWork from './PageComponet/WhoItWork';
 
 const Home = () => {
     return (
-        <div>
-            This is my home
+        <div className='mt-10'>
+            <Hero></Hero>
+            <WhoItWork></WhoItWork>
         </div>
     );
 };
