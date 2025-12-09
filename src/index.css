@@ -19,5 +19,5 @@
 }
 
 a.active{
-  @apply ml-3 bg-gradient-to-l to-[#8ABEB9] from-[#002455]  text-white py-2 px-3 font-semibold 
+  @apply ml-3 bg-linear-to-l to-[#8ABEB9] from-[#002455]  text-white py-2 px-3 font-semibold 
 }

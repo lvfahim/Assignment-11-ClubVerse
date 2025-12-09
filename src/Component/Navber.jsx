@@ -28,6 +28,9 @@ const Navber = () => {
         <li data-tooltip-id="infoTip" data-tooltip-content="Why Join">
             <NavLink to='/creatAClub'>Creat A Club</NavLink>
         </li>
+        <li data-tooltip-id="infoTip" data-tooltip-content="All Club">
+            <NavLink to='/showAllClub'>Show All Club</NavLink>
+        </li>
         <li data-tooltip-id="infoTip" data-tooltip-content="Blog">
             <NavLink to='/blog'>Blog</NavLink>
         </li>

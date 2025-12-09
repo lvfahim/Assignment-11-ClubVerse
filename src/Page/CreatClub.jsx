@@ -6,13 +6,16 @@ import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import useAuth from "../Hook/useAuth";
 import useAxiosSecure from "../Hook/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const CreateClub = () => {
     const { user } = useAuth();
     const Axios = useAxiosSecure();
+    const navigate =useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
-            managerEmail: user?.email || "" 
+            managerEmail: user?.email || ""
         }
     });
     const formRef = useRef(null);
@@ -43,12 +46,18 @@ const CreateClub = () => {
             const clubData = {
                 ...data,
                 photoUrl: imageUrl,  // ✅ Add URL here
-                status: "pending",
-                createdAt: new Date(),
-                updatedAt: new Date()
             };
-
-            console.log(clubData);
+            Axios.post('/manager', clubData)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        navigate('/showAllClub')
+                        Swal.fire({
+                            title: "The club is ready, please wait a moment",
+                            icon: "success",
+                            draggable: true
+                        });
+                    }
+                })
 
             // 5️⃣ Reset the form
             reset();

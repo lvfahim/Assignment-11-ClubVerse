@@ -10,6 +10,8 @@ import Error from "../Error And Loding Page/Error";
 import Blog from "../Page/Blog";
 import CreatClub from "../Page/CreatClub";
 import PrivetRouter from "../Provider/PrivetRouter";
+import ShowAllClub from "../Page/ShowAllClub";
+import ClubDetail from "../Page/ClubDetail/ClubDetail";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
             {
                 path:'/creatAClub',
                 element:<PrivetRouter><CreatClub></CreatClub></PrivetRouter>
+            },
+            {
+                path:'/showAllClub',
+                element:<ShowAllClub></ShowAllClub>
+            },
+            {
+                path:'/showAllClub/:Id',
+                element:<PrivetRouter><ClubDetail></ClubDetail></PrivetRouter>
             },
             {
                 path:'/blog',
