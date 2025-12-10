@@ -12,6 +12,8 @@ import CreatClub from "../Page/CreatClub";
 import PrivetRouter from "../Provider/PrivetRouter";
 import ShowAllClub from "../Page/ShowAllClub";
 import ClubDetail from "../Page/ClubDetail/ClubDetail";
+import Dashboard from "../Layout/Dashboard";
+import MyJoinedClubs from "../Page/Dashboard/MyJoinClub";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +54,7 @@ const router = createBrowserRouter([
     {
         path: "/auth",
         element: <Auth></Auth>,
+        errorElement:<Error></Error>,
         children: [
             {
                 path: '/auth/login',
@@ -60,6 +63,17 @@ const router = createBrowserRouter([
             {
                 path:'/auth/regester',
                 element:<Regester></Regester>
+            }
+        ]
+    },
+    {
+        path:'/dashboard',
+        element:<PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
+        errorElement:<Error></Error>,
+        children:[
+            {
+                path:'/dashboard/myjoinclub',
+                element:<MyJoinedClubs></MyJoinedClubs>
             }
         ]
     }

@@ -6,7 +6,7 @@ import Img from '../../assets/Gemini_Generated_Image_hlhhcwhlhhcwhlhh-modified.p
 const Hero = () => {
   return (
     <div className="w-full bg-linear-to-r from-[#002455] to-[#8ABEB9] py-32 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+      <div className="lg:max-w-6xl lg:mx-auto w-full px-6 grid lg:grid-cols-2 gap-10 items-center">
 
         {/* Left Content */}
         <motion.div
@@ -28,7 +28,7 @@ const Hero = () => {
               Explore Clubs
             </Link>
             <Link
-              to="/register"
+              to="/showAllClub"
               className="px-6 py-3 border border-white text-white rounded-lg hover:bg-white hover:text-[#002455] transition duration-300"
             >
               Join Now

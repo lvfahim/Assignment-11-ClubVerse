@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaMoneyBillWave, FaEnvelope } from 'react-icons/fa';
@@ -8,11 +8,14 @@ import { MdCategory } from 'react-icons/md';
 import { SiClubforce } from 'react-icons/si';
 import Loding from '../../Error And Loding Page/Loding';
 import CardError from '../../Error And Loding Page/CardError';
+import Swal from 'sweetalert2';
+import useAuth from '../../Hook/useAuth';
 
 const ClubDetail = () => {
     const { Id } = useParams();
     const axiosSecure = useAxiosSecure();
-
+    const { user } = useAuth();
+    const navigate = useNavigate()
     const { data: club, isLoading, isError } = useQuery({
         queryKey: ['clubDetail', Id],
         queryFn: async () => {
@@ -24,6 +27,45 @@ const ClubDetail = () => {
     if (isLoading) return <Loding />;
     if (isError) return <CardError></CardError>;
     if (!club) return <div className="text-center py-20 text-2xl text-gray-500">Club not found.</div>;
+
+
+    const handleJoin = () => {
+        const joinInfo = {
+            ...club,
+            clubId: club?._id,
+            userEmail: user?.email,
+            userName: user?.displayName
+        };
+
+        axiosSecure.post('/joinMember', joinInfo)
+            .then(res => {
+                if (res.data.insertedId) {
+                    navigate('/dashboard/myjoinclub');
+                    Swal.fire({
+                        title: "You joined the club successfully!",
+                        icon: "success",
+                        draggable: true,
+                    });
+                }
+            })
+            .catch(error => {
+                if (error.response?.status === 409) {
+                    // already joined
+                    Swal.fire({
+                        title: "You already joined this club!",
+                        icon: "warning",
+                        draggable: true,
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Something went wrong!",
+                        icon: "error",
+                        draggable: true,
+                    });
+                }
+            });
+    };
+
 
     return (
         <motion.div
@@ -52,7 +94,7 @@ const ClubDetail = () => {
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="flex-1 flex flex-col gap-4">
                         <div className="flex items-center gap-2">
-                            <SiClubforce className="text-2xl text-blue-600" />
+                            <SiClubforce className="text-2xl" />
                             <h2 className="text-2xl font-bold">{club.clubName}</h2>
                         </div>
 
@@ -80,6 +122,10 @@ const ClubDetail = () => {
                         <div>
                             <p className="text-xl ">Created At: {new Date(club.createdAt).toLocaleString()}</p>
                             <p className="text-xl ">Status: <span className={`${club.status === 'approved' ? 'text-green-600' : 'text-yellow-600'}`}>{club.status}</span></p>
+                        </div>
+
+                        <div className='mt-4'>
+                            <button onClick={handleJoin} className='btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2'>Join Now</button>
                         </div>
                     </div>
 

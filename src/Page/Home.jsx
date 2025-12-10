@@ -6,7 +6,7 @@ import MostOldClub from './PageComponet/MostOldClub';
 const Home = () => {
     return (
         <div className='mt-10'>
-            <div className="m-10">
+            <div className="mt-10">
                 <Hero></Hero>
             </div>
             <div className="mt-10">
