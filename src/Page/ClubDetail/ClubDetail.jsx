@@ -80,7 +80,7 @@ const ClubDetail = () => {
                 membershipFee: club.membershipFee,
                 status: club.status,
                 category: club.category,
-                photoUrl: club.photoUrl
+                photoUrl: club.photoUrl,
             };
 
             const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
@@ -174,7 +174,7 @@ const ClubDetail = () => {
                                     onClick={handleJoin}
                                     className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2"
                                 >
-                                    Join Now
+                                    Join And Pay Now
                                 </button>
                             )}
                         </div>

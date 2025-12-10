@@ -50,15 +50,14 @@ const Login = () => {
     const heandleFormGoogle = () => {
         Google()
             .then(result => {
-                console.log(result)
+                // console.log(result)
                 const userInfo = {
                     email: result.user.email,
                     displayName: result.user.displayName,
                     photoURL: result.user.photoURL
                 }
                 Axios.post('/users', userInfo)
-                    .then(res => {
-                        console.log('user data has been stored', res.data)
+                    .then(()=> {
                         navigate(location.state || '/');
                     })
                 Swal.fire({

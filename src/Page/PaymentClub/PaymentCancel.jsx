@@ -57,16 +57,6 @@ const PaymentCancel = () => {
                 </p>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-gray-800 border-t pt-4 mt-4">
-                        What Happens Next?
-                    </h2>
-
-                    <div className="bg-red-50 p-4 rounded-lg text-left text-gray-700">
-                        <ul className="list-disc list-inside space-y-2">
-                            <li><span className="font-medium">No Charge:</span> Your card or payment method was **not charged**.</li>
-                            <li><span className="font-medium">Club Membership:</span> You have **not** been enrolled in the club.</li>
-                        </ul>
-                    </div>
 
                     <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                         {/* Go Back Button */}
