@@ -14,66 +14,81 @@ import ShowAllClub from "../Page/ShowAllClub";
 import ClubDetail from "../Page/ClubDetail/ClubDetail";
 import Dashboard from "../Layout/Dashboard";
 import MyJoinedClubs from "../Page/Dashboard/MyJoinClub";
+import PaymentSuccess from "../Page/PaymentClub/PaymentSuccess";
+import PaymentCancel from "../Page/PaymentClub/PaymentCancel";
+import Contact from "../Page/PageComponet/Contact";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root></Root>,
-        errorElement:<Error></Error>,
+        errorElement: <Error></Error>,
         children: [
             {
                 path: '/',
                 element: <Home></Home>
             },
             {
-                path:'/aboutUs',
-                element:<AboutUs></AboutUs>
+                path: '/aboutUs',
+                element: <AboutUs></AboutUs>
             },
             {
-                path:'/whyJoin',
-                element:<WhyJoin></WhyJoin>
+                path: '/whyJoin',
+                element: <WhyJoin></WhyJoin>
             },
             {
-                path:'/creatAClub',
-                element:<PrivetRouter><CreatClub></CreatClub></PrivetRouter>
+                path: '/creatAClub',
+                element: <PrivetRouter><CreatClub></CreatClub></PrivetRouter>
             },
             {
-                path:'/showAllClub',
-                element:<ShowAllClub></ShowAllClub>
+                path: '/showAllClub',
+                element: <ShowAllClub></ShowAllClub>
             },
             {
-                path:'/showAllClub/:Id',
-                element:<PrivetRouter><ClubDetail></ClubDetail></PrivetRouter>
+                path: '/showAllClub/:Id',
+                element: <PrivetRouter><ClubDetail></ClubDetail></PrivetRouter>
             },
             {
-                path:'/blog',
-                element:<Blog></Blog>
+                path: '/blog',
+                element: <Blog></Blog>
+            },
+            {
+                path:'/contact',
+                element:<Contact></Contact>
             }
         ]
     },
     {
         path: "/auth",
         element: <Auth></Auth>,
-        errorElement:<Error></Error>,
+        errorElement: <Error></Error>,
         children: [
             {
                 path: '/auth/login',
                 element: <Login></Login>
             },
             {
-                path:'/auth/regester',
-                element:<Regester></Regester>
+                path: '/auth/regester',
+                element: <Regester></Regester>
             }
         ]
     },
     {
-        path:'/dashboard',
-        element:<PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
-        errorElement:<Error></Error>,
-        children:[
+        path: '/dashboard',
+        element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
+        errorElement: <Error></Error>,
+        children: [
             {
-                path:'/dashboard/myjoinclub',
-                element:<MyJoinedClubs></MyJoinedClubs>
+                path: '/dashboard/myjoinclub',
+                element: <MyJoinedClubs></MyJoinedClubs>
+            },
+            {
+                path: '/dashboard/payment-success',
+                element: <PaymentSuccess></PaymentSuccess>
+            },
+            {
+                path: '/dashboard/payment-cancel',
+                element: <PaymentCancel></PaymentCancel>
             }
         ]
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useParams, useNavigate } from 'react-router';
 import useAxiosSecure from '../../Hook/useAxiosSecure';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaMoneyBillWave, FaEnvelope } from 'react-icons/fa';
@@ -14,64 +14,97 @@ import useAuth from '../../Hook/useAuth';
 const ClubDetail = () => {
     const { Id } = useParams();
     const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();
-    const navigate = useNavigate()
-    const { data: club, isLoading, isError } = useQuery({
+    const { user, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
+
+    const {
+        data: club,
+        isLoading: clubLoading,
+        isError: clubError,
+        error: clubErrorObj,
+    } = useQuery({
         queryKey: ['clubDetail', Id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/clubs/${Id}`);
             return res.data;
-        }
+        },
+        enabled: !!Id,
+    });
+    const {
+        data: joinedClubs = [],
+        isLoading: joinedLoading,
+        isError: joinedError,
+    } = useQuery({
+        queryKey: ['joinedClubs', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/joinMember?email=${user.email}`);
+            return res.data;
+        },
+        enabled: !!user?.email, // only run when user email exists
+        retry: false,
     });
 
-    if (isLoading) return <Loding />;
-    if (isError) return <CardError></CardError>;
+    // Combined loading / error states
+    if (authLoading || clubLoading || joinedLoading) return <Loding />;
+    if (clubError) return <CardError />;
     if (!club) return <div className="text-center py-20 text-2xl text-gray-500">Club not found.</div>;
 
+    // Determine whether the current user already joined this club
+    const alreadyJoined = Boolean(
+        joinedClubs && Array.isArray(joinedClubs) && joinedClubs.some(j => {
+            // clubId might be stored as string — compare string forms to be safe
+            return String(j.clubId) === String(club._id);
+        })
+    );
 
-    const handleJoin = () => {
-        const joinInfo = {
-            ...club,
-            clubId: club?._id,
-            userEmail: user?.email,
-            userName: user?.displayName
-        };
-
-        axiosSecure.post('/joinMember', joinInfo)
-            .then(res => {
-                if (res.data.insertedId) {
-                    navigate('/dashboard/myjoinclub');
-                    Swal.fire({
-                        title: "You joined the club successfully!",
-                        icon: "success",
-                        draggable: true,
-                    });
-                }
-            })
-            .catch(error => {
-                if (error.response?.status === 409) {
-                    // already joined
-                    Swal.fire({
-                        title: "You already joined this club!",
-                        icon: "warning",
-                        draggable: true,
-                    });
-                } else {
-                    Swal.fire({
-                        title: "Something went wrong!",
-                        icon: "error",
-                        draggable: true,
-                    });
-                }
+    // Handler: start Stripe checkout (redirect). PaymentSuccess page will verify and insert join.
+    const handleJoin = async () => {
+        if (!user?.email) {
+            Swal.fire({
+                title: 'Please login first',
+                text: 'You must be logged in to join a club.',
+                icon: 'warning'
             });
-    };
+            navigate('/auth/login');
+            return;
+        }
 
+        try {
+            const paymentInfo = {
+                money: club.membershipFee,
+                clubId: club._id,
+                userEmail: user.email,
+                ClubName: club.clubName,
+                managerEmail: club.managerEmail,
+                location: club.location,
+                membershipFee: club.membershipFee,
+                status: club.status,
+                category: club.category,
+                photoUrl: club.photoUrl
+            };
+
+            const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+            // redirect to Stripe Checkout
+            if (res.data?.url) {
+                window.location.href = res.data.url;
+            } else {
+                throw new Error('No checkout URL returned from server.');
+            }
+        } catch (err) {
+            console.error('Checkout create error:', err);
+            Swal.fire({
+                title: 'Payment session failed',
+                text: 'Unable to start payment. Please try again later.',
+                icon: 'error'
+            });
+        }
+    };
 
     return (
         <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             className="max-w-6xl mx-auto py-16 px-6"
         >
             {/* Banner */}
@@ -88,9 +121,8 @@ const ClubDetail = () => {
                 className="bg-white p-6 rounded-2xl shadow-lg flex flex-col gap-6"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-                {/* Basic Info */}
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="flex-1 flex flex-col gap-4">
                         <div className="flex items-center gap-2">
@@ -103,8 +135,8 @@ const ClubDetail = () => {
                             <p className="text-lg font-medium">{club.category}</p>
                         </div>
 
-                        <div className="">
-                            <div className='flex items-center gap-4 mt-2 text-gray-700 mb-2'>
+                        <div>
+                            <div className="flex items-center gap-4 mt-2 text-gray-700 mb-2">
                                 <span className="flex items-center gap-1">
                                     <FaMapMarkerAlt className="text-red-500" /> {club.location}
                                 </span>
@@ -120,12 +152,31 @@ const ClubDetail = () => {
                         </div>
 
                         <div>
-                            <p className="text-xl ">Created At: {new Date(club.createdAt).toLocaleString()}</p>
-                            <p className="text-xl ">Status: <span className={`${club.status === 'approved' ? 'text-green-600' : 'text-yellow-600'}`}>{club.status}</span></p>
+                            <p className="text-xl">Created At: {new Date(club.createdAt).toLocaleString()}</p>
+                            <p className="text-xl">
+                                Status:{' '}
+                                <span className={`${club.status === 'approved' ? 'text-green-600' : 'text-yellow-600'}`}>
+                                    {club.status}
+                                </span>
+                            </p>
                         </div>
 
-                        <div className='mt-4'>
-                            <button onClick={handleJoin} className='btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2'>Join Now</button>
+                        <div className="mt-4">
+                            {alreadyJoined ? (
+                                <button
+                                    className="btn bg-gray-400 text-white text-xl rounded-xl px-6 py-2 cursor-not-allowed"
+                                    disabled
+                                >
+                                    Already Joined
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleJoin}
+                                    className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2"
+                                >
+                                    Join Now
+                                </button>
+                            )}
                         </div>
                     </div>
 
@@ -139,8 +190,8 @@ const ClubDetail = () => {
                 {/* Footer Button */}
                 <div className="flex justify-end mt-4">
                     <Link
-                        to='/showAllClub'
-                        className='btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2'
+                        to="/showAllClub"
+                        className="btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white rounded-xl px-6 py-2"
                     >
                         Go Back
                     </Link>

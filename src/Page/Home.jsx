@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from './PageComponet/Hero';
 import WhoItWork from './PageComponet/WhoItWork';
 import MostOldClub from './PageComponet/MostOldClub';
+import Contact from './PageComponet/Contact';
 
 const Home = () => {
     return (
@@ -11,6 +12,9 @@ const Home = () => {
             </div>
             <div className="mt-10">
                 <MostOldClub></MostOldClub>
+            </div>
+            <div className="mt-10">
+                <Contact></Contact>
             </div>
             <div className="">
                 <WhoItWork></WhoItWork>
