@@ -30,6 +30,7 @@ const ShowAllClub = () => {
         queryKey: ['club', 'approved'],
         queryFn: async () => {
             const res = await axiosSecure.get('/clubs');
+            console.log(res.data)
             return res.data;
         }
     });
@@ -50,52 +51,56 @@ const ShowAllClub = () => {
                 initial="hidden"
                 animate="show"
             >
-                {clubs.map((club, index) => (
-                    <motion.div
-                        key={club._id || index}
-                        className="bg-white rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-100 flex flex-col"
-                        variants={cardVariants}
-                        whileHover="hover"
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        {/* Club Image Section */}
-                        <div className="relative overflow-hidden">
-                            <motion.img
-                                src={club.photoUrl}
-                                alt={club.clubName}
-                                className="w-full h-48 object-cover"
-                                whileHover={{ scale: 1.1 }}
-                                transition={{ duration: 0.5 }}
-                            />
-                        </div>
-
-                        {/* Club Details Section */}
-                        <div className="p-5 flex flex-col flex-grow">
-                            <div className="flex gap-2 items-center">
-                                <SiClubforce className='text-xl' />
-                                <h3 className="text-xl font-bold mb-1 text-gray-900">{club.clubName}</h3>
-                            </div>
-                            <div className="flex gap-2 items-center">
-                                <MdCategory className='text-xl text-blue-500' />
-                                <h2 className="text-xl font-bold mb-1 text-gray-900">{club.category}</h2>
+                {clubs
+                    .filter(club => club.status === 'pending') 
+                    .map((club, index) => (
+                        <motion.div
+                            key={club._id || index}
+                            className="bg-white rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-100 flex flex-col"
+                            variants={cardVariants}
+                            whileHover="hover"
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            {/* Club Image Section */}
+                            <div className="relative overflow-hidden">
+                                <motion.img
+                                    src={club.photoUrl}
+                                    alt={club.clubName}
+                                    className="w-full h-48 object-cover"
+                                    whileHover={{ scale: 1.1 }}
+                                    transition={{ duration: 0.5 }}
+                                />
                             </div>
 
-                            {/* Location & Fee Metadata */}
-                            <div className="flex items-center text-sm text-gray-500 space-x-4 mb-4">
-                                <span className="flex items-center gap-1 font-medium">
-                                    <FaMapMarkerAlt className="w-3 h-3 text-red-500" /> {club.location}
-                                </span>
-                                <span className="flex items-center gap-1 font-medium">
-                                    <FaMoneyBillWave className="w-3 h-3 text-green-600" /> {club.membershipFee || '0'} BDT
-                                </span>
+                            {/* Club Details Section */}
+                            <div className="p-5 flex flex-col flex-grow">
+                                <div className="flex gap-2 items-center">
+                                    <SiClubforce className='text-xl' />
+                                    <h3 className="text-xl font-bold mb-1 text-gray-900">{club.clubName}</h3>
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <MdCategory className='text-xl text-blue-500' />
+                                    <h2 className="text-xl font-bold mb-1 text-gray-900">{club.category}</h2>
+                                </div>
+
+                                {/* Location & Fee Metadata */}
+                                <div className="flex items-center text-sm text-gray-500 space-x-4 mb-4">
+                                    <span className="flex items-center gap-1 font-medium">
+                                        <FaMapMarkerAlt className="w-3 h-3 text-red-500" /> {club.location}
+                                    </span>
+                                    <span className="flex items-center gap-1 font-medium">
+                                        <FaMoneyBillWave className="w-3 h-3 text-green-600" /> {club.membershipFee || '0'} BDT
+                                    </span>
+                                </div>
+
+                                {/* Call to Action Footer */}
+                                <Link to={`/showAllClub/${club._id}`} className="mt-auto w-full text-center rounded-2xl py-2 bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white transition-colors duration-200">
+                                    View Details
+                                </Link>
                             </div>
-                            {/* Call to Action Footer */}
-                            <Link to={`/showAllClub/${club._id}`} className="mt-auto w-full text-center rounded-2xl py-2 bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl text-white transition-colors duration-200">
-                                View Details
-                            </Link>
-                        </div>
-                    </motion.div>
-                ))}
+                        </motion.div>
+                    ))
+                }
             </motion.div>
         </div>
     );

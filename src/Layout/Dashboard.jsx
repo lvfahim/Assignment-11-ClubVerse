@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, Link } from 'react-router';
-import { MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
+import { MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
 // --- Framer Motion Animation Variants ---
@@ -21,7 +21,7 @@ const sidebarItemVariants = {
 // Define all dashboard and main links here for clean mapping
 const dashboardLinks = [
     { to: '/dashboard/myjoinclub', icon: MdJoinInner, label: 'My Joined Clubs', category: 'Dashboard' },
-    // Add other dashboard links here (e.g., admin, club organizer links)
+    { to: '/dashboard/myCreatClub', icon: MdOutlineLibraryAdd, label: 'My Created Clubs', category: 'Dashboard' },
     { to: '/dashboard/settings', icon: MdSettings, label: 'Settings', category: 'Dashboard' }, 
 ];
 
