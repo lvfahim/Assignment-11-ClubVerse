@@ -31,9 +31,11 @@ const Contact = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        // FIX: Adjusted width here for better responsiveness and large screen coverage.
+        // Used 'w-11/12' for slightly wider appearance on large screens, max-w-7xl ensures it doesn't get too wide.
+        <div className="min-h-screen w-11/12 max-w-7xl mx-auto bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <motion.div 
-                className="max-w-6xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden"
+                className="mx-auto bg-white shadow-2xl rounded-xl overflow-hidden"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -63,6 +65,7 @@ const Contact = () => {
                     >
                         <h3 className="text-2xl font-bold border-b border-indigo-500 pb-2">Our Details</h3>
 
+                        {/* Location */}
                         <div className="flex items-start space-x-4">
                             <FaMapMarkerAlt className="text-xl mt-1 text-indigo-400 flex-shrink-0" />
                             <div>
@@ -71,6 +74,7 @@ const Contact = () => {
                             </div>
                         </div>
 
+                        {/* Phone */}
                         <div className="flex items-start space-x-4">
                             <FaPhoneAlt className="text-xl mt-1 text-indigo-400 flex-shrink-0" />
                             <div>
@@ -79,6 +83,7 @@ const Contact = () => {
                             </div>
                         </div>
 
+                        {/* Email */}
                         <div className="flex items-start space-x-4">
                             <FaEnvelope className="text-xl mt-1 text-indigo-400 flex-shrink-0" />
                             <div>
@@ -136,15 +141,18 @@ const Contact = () => {
                                 ></textarea>
                             </motion.div>
                             
-                            {/* Submit Button */}
+                            {/* Submit Button with Hover Animation */}
                             <motion.div variants={itemVariants}>
-                                <button
+                                <motion.button
                                     type="submit"
-                                    className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 gap-2"
+                                    // Added Framer Motion interaction props
+                                    whileHover={{ scale: 1.01, boxShadow: "0 10px 20px rgba(99, 102, 241, 0.4)" }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 gap-2"
                                 >
                                     <FaPaperPlane className="text-lg" />
                                     Send Message
-                                </button>
+                                </motion.button>
                             </motion.div>
                         </form>
                     </motion.div>
