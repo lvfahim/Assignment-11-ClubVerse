@@ -115,7 +115,7 @@ const MyCreatClub = () => {
                             <tr>
                                 <th>#</th>
                                 <th>Club Name / Category</th>
-                                <th>Fee / Status</th>
+                                <th>Fee </th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -130,15 +130,6 @@ const MyCreatClub = () => {
                                     </td>
                                     <td>
                                         <div className="font-mono text-gray-700">${club.membershipFee || '0'}</div>
-                                        {club.status === 'approved' ? (
-                                            <span className="badge badge-sm bg-green-100 text-green-700 border-green-300 gap-2">
-                                                <FaCheckCircle /> Active
-                                            </span>
-                                        ) : (
-                                            <span className="badge badge-sm bg-yellow-100 text-yellow-700 border-yellow-300 gap-2">
-                                                <FaHourglassHalf /> Reviewing
-                                            </span>
-                                        )}
                                     </td>
                                     <td className="text-gray-700 font-medium">
                                         {club.createdAt ? new Date(club.createdAt).toLocaleString() : "N/A"}
