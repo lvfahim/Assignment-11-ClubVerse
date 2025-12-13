@@ -30,7 +30,6 @@ const ShowAllClub = () => {
         queryKey: ['club', 'approved'],
         queryFn: async () => {
             const res = await axiosSecure.get('/clubs');
-            console.log(res.data)
             return res.data;
         }
     });

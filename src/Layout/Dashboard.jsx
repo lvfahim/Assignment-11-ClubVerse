@@ -3,6 +3,7 @@ import { NavLink, Outlet, Link } from 'react-router';
 import { MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import useRole from '../Hook/useRole';
+import { MdOutlinePayment } from "react-icons/md";
 import Loding from '../Error And Loding Page/Loding';
 
 // --- Framer Motion Animation Variants ---
@@ -37,6 +38,7 @@ const Dashboard = () => {
     let dashboardLinks = [
         { to: '/dashboard/myjoinclub', icon: MdJoinInner, label: 'My Joined Clubs', category: 'Dashboard' },
         { to: '/dashboard/myCreatClub', icon: MdOutlineLibraryAdd, label: 'My Created Clubs', category: 'Dashboard' },
+        { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment', category: 'Dashboard' },
     ];
 
     // Add admin-specific links only if the role is 'admin'
