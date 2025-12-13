@@ -1,42 +1,32 @@
-import { useSearchParams, useNavigate } from "react-router";
-import { useEffect } from "react";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
 
-export default function PaymentSuccess() {
-    const [params] = useSearchParams();
-    const sessionId = params.get("session_id");
+const PaymentSuccess = () => {
+    const [searchParams] = useSearchParams();
+    const [paymentInfo, setPaymentInfo] = useState({});
+    const sessionId = searchParams.get('session_id');
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
+
 
     useEffect(() => {
-        const verify = async () => {
-            const res = await axiosSecure.post("/verify-payment", { sessionId });
-            
-            if (res.data.paymentStatus === "paid") {
+        if (sessionId) {
+            axiosSecure.patch(`/payment-success?session_id=${sessionId}`)
+                .then(res => {
+                    setPaymentInfo({
+                        transactionId: res.data.transactionId,
+                    })
+                })
+        }
 
-                // payment successful → now insert join record
-                await axiosSecure.post("/joinMember", res.data.joinInfo);
+    }, [sessionId, axiosSecure])
 
-                Swal.fire({
-                    title: "Payment successful! You joined the club.",
-                    icon: "success"
-                });
+    return (
+        <div>
+            <h2 className="text-4xl">Payment successful</h2>
+            <p>Your TransactionId: {paymentInfo.transactionId}</p>
+        </div>
+    );
+};
 
-                navigate("/dashboard/myjoinclub");
-            } else {
-
-                Swal.fire({
-                    title: "Payment failed or cancelled!",
-                    icon: "error"
-                });
-
-                navigate("/showAllClub");
-            }
-        };
-
-        verify();
-    }, [axiosSecure,navigate,sessionId]);
-
-    return <p className="text-center mt-20 text-xl">Verifying payment...</p>;
-}
+export default PaymentSuccess;
