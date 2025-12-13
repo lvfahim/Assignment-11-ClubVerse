@@ -18,6 +18,7 @@ import PaymentSuccess from "../Page/PaymentClub/PaymentSuccess";
 import PaymentCancel from "../Page/PaymentClub/PaymentCancel";
 import Contact from "../Page/PageComponet/Contact";
 import MyCreatClub from "../Page/Dashboard/MyCreatClub";
+import ApproveClub from "../Page/Dashboard/ApproveClub";
 
 const router = createBrowserRouter([
     {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
             {
                 path:'/dashboard/myCreatClub',
                 element:<MyCreatClub></MyCreatClub>
+            },
+            {
+                path:'/dashboard/approveClub',
+                element:<ApproveClub></ApproveClub>
             }
         ]
     }

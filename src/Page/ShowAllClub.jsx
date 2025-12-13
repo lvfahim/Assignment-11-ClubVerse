@@ -52,7 +52,7 @@ const ShowAllClub = () => {
                 animate="show"
             >
                 {clubs
-                    .filter(club => club.status === 'pending') 
+                    .filter(club => club.status === 'approve') 
                     .map((club, index) => (
                         <motion.div
                             key={club._id || index}

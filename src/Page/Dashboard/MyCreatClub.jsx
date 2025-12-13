@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-
+import { ToastContainer, toast } from 'react-toastify';
 // Framer Motion variants
 const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -42,6 +42,8 @@ const MyCreatClub = () => {
     // --- Functions ---
     const handleViewMembers = (clubId) => {
         console.log(`Viewing members for club ID: ${clubId}`);
+        toast("It's being worked on, please try again later.")
+
     };
 
     const handleEditClub = (club) => {
@@ -225,6 +227,7 @@ const MyCreatClub = () => {
                     </motion.div>
                 </dialog>
             )}
+            <ToastContainer />
         </motion.div>
     );
 };
