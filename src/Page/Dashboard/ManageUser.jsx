@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import Loding from '../../Error And Loding Page/Loding';
 import Img from '../../assets/user.png'; 
 import Swal from 'sweetalert2';
+import { Navigate, useNavigate } from 'react-router';
+import useAuth from '../../Hook/useAuth';
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -25,7 +27,8 @@ const itemVariants = {
 
 const ManageUser = () => {
     const Axios = useAxiosSecure();
-
+    const Navigate =useNavigate();
+    const {LogOut}=useAuth()
     const { refetch, data: users = [], isPending, isError, error } = useQuery({
         queryKey: ['allUsers'],
         queryFn: async () => {
@@ -72,7 +75,7 @@ const ManageUser = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                Axios.patch(`/users/${user._id}`, roleInfo)
+                Axios.patch(`/users/${user._id}/role`, roleInfo)
                     .then(res => {
                         if (res.data.modifiedCount) {
                             refetch(); 
@@ -87,7 +90,12 @@ const ManageUser = () => {
                     })
                     .catch(err => {
                         console.error("Role update error:", err);
-                        Swal.fire("Error", "Failed to update role. Check server logs.", "error");
+                        Swal.fire("Error", "Failed to update role. Check server logs.", "error")
+                        LogOut()
+                        .then(()=>{
+                            
+                        })
+                        Navigate('/auth/login')
                     });
 
             }

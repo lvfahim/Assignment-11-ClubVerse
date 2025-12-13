@@ -99,7 +99,7 @@ const router = createBrowserRouter([
                 element:<MyCreatClub></MyCreatClub>
             },
             {
-                path:'/dashboard/approveClub',
+                path:'/dashboard/approveClub',               
                 element:<AdminRoute><ApproveClub></ApproveClub></AdminRoute>
             },
             {
