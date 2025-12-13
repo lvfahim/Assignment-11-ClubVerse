@@ -3,6 +3,7 @@ import Hero from './PageComponet/Hero';
 import WhoItWork from './PageComponet/WhoItWork';
 import MostOldClub from './PageComponet/MostOldClub';
 import Contact from './PageComponet/Contact';
+import ProjectAuthor from './PageComponet/ProjectAuthor';
 
 const Home = () => {
     return (
@@ -23,6 +24,10 @@ const Home = () => {
 
                 <div className="pt-10">
                     <Contact />
+                </div>
+
+                <div className="">
+                    <ProjectAuthor />
                 </div>
             </div>
         </div>
