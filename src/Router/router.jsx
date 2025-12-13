@@ -20,6 +20,7 @@ import Contact from "../Page/PageComponet/Contact";
 import MyCreatClub from "../Page/Dashboard/MyCreatClub";
 import ApproveClub from "../Page/Dashboard/ApproveClub";
 import ManageUser from "../Page/Dashboard/ManageUser";
+import AdminRoute from "../Provider/AdminProvider";
 
 const router = createBrowserRouter([
     {
@@ -99,11 +100,11 @@ const router = createBrowserRouter([
             },
             {
                 path:'/dashboard/approveClub',
-                element:<ApproveClub></ApproveClub>
+                element:<AdminRoute><ApproveClub></ApproveClub></AdminRoute>
             },
             {
                 path:'/dashboard/manageUser',
-                element:<ManageUser></ManageUser>
+                element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
             }
         ]
     }
