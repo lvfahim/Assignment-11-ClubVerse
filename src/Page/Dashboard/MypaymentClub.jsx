@@ -49,6 +49,7 @@ const MyPaymentClub = () => {
                             <tr>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Club Name</th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction </th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount Paid</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paid On</th>
@@ -63,6 +64,7 @@ const MyPaymentClub = () => {
                                         <div className="text-sm font-semibold text-indigo-600">{club.clubName}</div>
                                         <div className="text-xs text-gray-500">{club.customerEmail || 'N/A'}</div>
                                     </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{club.transactionId}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{club.category}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">${(club.amount || 0).toFixed(2)}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
