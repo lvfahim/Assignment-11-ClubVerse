@@ -15,7 +15,8 @@ import {
     FaInfoCircle,   
     FaUsers,       
     FaPenSquare,    
-    FaBookOpen      
+    FaBookOpen  ,
+    FaGlobe    
 } from 'react-icons/fa';
 
 const navVariants = {
@@ -57,6 +58,7 @@ const Navber = () => {
         { to: '/whyJoin', label: 'Why Join', icon: FaUsers },
         { to: '/creatAClub', label: 'Create A Club', icon: FaPenSquare },
         { to: '/showAllClub', label: 'All Clubs', icon: FaUsers },
+        { to: '/showAllEvent', label: 'All Events', icon: FaGlobe },
         { to: '/blog', label: 'Blog', icon: FaBookOpen },
     ];
 
@@ -108,7 +110,7 @@ const Navber = () => {
             variants={navVariants}
             className="w-full bg-white shadow-lg sticky top-0 z-50 transition-all duration-300"
         >
-            <div className="navbar max-w-7xl mx-auto px-4 py-2">
+            <div className="navbar w-9/12 mx-auto px-4 py-2">
 
                 {/* --- Navbar Start (Logo and Mobile Dropdown) --- */}
                 <div className="navbar-start">

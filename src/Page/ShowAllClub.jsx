@@ -41,7 +41,7 @@ const ShowAllClub = () => {
     return (
         <div className="w-full py-16 bg-gray-50">
             <h2 className="text-4xl font-extrabold mb-12 text-center text-gray-800">
-                Explore All Clubs 🌐
+                🌐 Explore All Clubs ({clubs.length})
             </h2>
 
             <motion.div
@@ -72,7 +72,7 @@ const ShowAllClub = () => {
                             </div>
 
                             {/* Club Details Section */}
-                            <div className="p-5 flex flex-col flex-grow">
+                            <div className="p-5 flex flex-col grow">
                                 <div className="flex gap-2 items-center">
                                     <SiClubforce className='text-xl' />
                                     <h3 className="text-xl font-bold mb-1 text-gray-900">{club.clubName}</h3>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, Link } from 'react-router'; 
-import {MdOutlineCalendarMonth, MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
+import { MdOutlinePayments, MdOutlineBeenhere, MdOutlineEventAvailable, MdOutlineCalendarMonth, MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import useRole from '../Hook/useRole';
 import { MdOutlinePayment } from "react-icons/md";
@@ -30,6 +30,7 @@ const Dashboard = () => {
     const mainLinks = [
         { to: '/', icon: MdHome, label: 'Homepage', category: 'Main' },
         { to: '/showAllClub', icon: MdPeopleAlt, label: 'Show All Clubs', category: 'Main' },
+        { to: '/showAllEvent', icon: MdOutlineEventAvailable, label: 'Show All Event', category: 'Main' },
         { to: '/creatAClub', icon: MdOutlineCreate, label: 'Create A Club', category: 'Main' },
         { to: '/blog', icon: MdArticle, label: 'Blog', category: 'Main' },
     ];
@@ -38,8 +39,10 @@ const Dashboard = () => {
     let dashboardLinks = [
         { to: '/dashboard/myjoinclub', icon: MdJoinInner, label: 'My Joined Clubs', category: 'Dashboard' },
         { to: '/dashboard/myCreatClub', icon: MdOutlineLibraryAdd, label: 'My Created Clubs', category: 'Dashboard' },
-        { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment', category: 'Dashboard' },
+        { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment club', category: 'Dashboard' },
+        { to: '/dashboard/myJoinEvent', icon: MdOutlineBeenhere, label: 'My Join Event', category: 'Dashboard' },
         { to: '/dashboard/myCreatEvent', icon: MdOutlineCalendarMonth, label: 'My Created Event', category: 'Dashboard' },
+        { to: '/dashboard/myPaymentEvent', icon: MdOutlinePayments, label: 'My Payment Event', category: 'Dashboard' },
     ];
 
     // Add admin-specific links only if the role is 'admin'

@@ -17,12 +17,7 @@ const ClubDetail = () => {
     const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
 
-    const {
-        data: club,
-        isLoading: clubLoading,
-        isError: clubError,
-        error: clubErrorObj,
-    } = useQuery({
+    const {data: club,isLoading: clubLoading,isError: clubError,error: clubErrorObj,} = useQuery({
         queryKey: ['clubDetail', Id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/clubs/${Id}`);
@@ -30,21 +25,16 @@ const ClubDetail = () => {
         },
         enabled: !!Id,
     });
-    const {
-        data: joinedClubs = [],
-        isLoading: joinedLoading,
-        isError: joinedError,
-    } = useQuery({
+    const {data: joinedClubs = [],isLoading: joinedLoading,isError: joinedError,} = useQuery({
         queryKey: ['joinedClubs', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/joinMember?email=${user.email}`);
             return res.data;
         },
-        enabled: !!user?.email, // only run when user email exists
+        enabled: !!user?.email, 
         retry: false,
     });
 
-    // Combined loading / error states
     if (authLoading || clubLoading || joinedLoading) return <Loding />;
     if (clubError) return <CardError />;
     if (!club) return <div className="text-center py-20 text-2xl text-gray-500">Club not found.</div>;

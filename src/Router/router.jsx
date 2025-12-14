@@ -23,6 +23,12 @@ import ManageUser from "../Page/Dashboard/ManageUser";
 import AdminRoute from "../Provider/AdminProvider";
 import MypaymentClub from "../Page/Dashboard/MypaymentClub";
 import MyCreatedEvent from "../Page/Dashboard/MyCreatedEvent";
+import ShowAllEvent from "../Page/ShowAllEvent";
+import MyJoinEvent from "../Page/Dashboard/MyJoinEvent";
+import MyPaymentEvent from "../Page/Dashboard/MyPaymentEvent";
+import EventDetail from "../Page/ClubDetail/EventDetail";
+import PaymentCancelEvent from "../Page/PaymentEvent/PaymentCancelEvent";
+import PaymentSuccessEvent from "../Page/PaymentEvent/PaymentSuccessEvent";
 
 const router = createBrowserRouter([
     {
@@ -51,8 +57,16 @@ const router = createBrowserRouter([
                 element: <ShowAllClub></ShowAllClub>
             },
             {
+                path: '/showAllEvent',
+                element: <ShowAllEvent></ShowAllEvent>
+            },
+            {
                 path: '/showAllClub/:Id',
                 element: <PrivetRouter><ClubDetail></ClubDetail></PrivetRouter>
+            },
+            {
+                path: '/showAllEvent/:Id',
+                element: <PrivetRouter><EventDetail></EventDetail></PrivetRouter>
             },
             {
                 path: '/blog',
@@ -103,6 +117,22 @@ const router = createBrowserRouter([
             {
                 path:'/dashboard/myCreatEvent',
                 element:<MyCreatedEvent></MyCreatedEvent>
+            },
+            {
+                path:'/dashboard/myJoinEvent',
+                element:<MyJoinEvent></MyJoinEvent>
+            },
+            {
+                path:'/dashboard/myPaymentEvent',
+                element:<MyPaymentEvent></MyPaymentEvent>
+            },
+             {
+                path: '/dashboard/payment-success-event',
+                element: <PaymentSuccessEvent></PaymentSuccessEvent>
+            },
+            {
+                path: '/dashboard/payment-cancel-event',
+                element: <PaymentCancelEvent></PaymentCancelEvent>
             },
             {
                 path:'/dashboard/myPaymentClub',
