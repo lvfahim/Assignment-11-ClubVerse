@@ -3,15 +3,12 @@ import useAxiosSecure from '../../Hook/useAxiosSecure';
 import useAuth from '../../Hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
 
-// Renamed the function component to follow PascalCase convention
 const MyPaymentClub = () => {
     const axiosSecure = useAxiosSecure();
-    const { user, loading } = useAuth(); // Assume useAuth provides 'loading' state
+    const { user, loading } = useAuth(); 
 
     const { data: paidClubs = [], isPending, isError, error } = useQuery({
-        // Renamed query key for clarity
         queryKey: ['paidClubs', user?.email],
-        // Ensure data fetching is enabled only after user object is loaded and email exists
         enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/joinPaymentClub?email=${user.email}`);
@@ -23,7 +20,6 @@ const MyPaymentClub = () => {
         return (
             <div className="text-center mt-10">
                 <p className="text-xl font-semibold">Loading paid club list...</p>
-                {/* Optional spinner/loader could go here */}
             </div>
         );
     }

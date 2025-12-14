@@ -9,7 +9,7 @@ import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
-// Framer Motion variants
+
 const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -26,9 +26,13 @@ const MyCreatClub = () => {
 
     const { register, handleSubmit, reset } = useForm();
 
+
     const [selectedClubId, setSelectedClubId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const [isModalOpenCreat, setIsModalOpenCreat] = useState(false);
+    const [selectedEventClubId, setSelectedEventClubId] = useState(null);
+    const [selectedEventClubName, setSelectedEventClubName] = useState(null);
     // Fetch clubs created by the user
     const { data: clubs = [], isPending, isError, error } = useQuery({
         queryKey: ['myCreatedClubs', user?.email],
@@ -39,7 +43,7 @@ const MyCreatClub = () => {
         }
     });
 
-    // --- Functions ---
+
     const handleViewMembers = (clubId) => {
         console.log(`Viewing members for club ID: ${clubId}`);
         toast("It's being worked on, please try again later.")
@@ -70,6 +74,45 @@ const MyCreatClub = () => {
         }
     };
 
+    // UPDATED FUNCTION: Now saves the club ID before opening the modal
+    const heandleCreatFrom = (club) => {
+        setSelectedEventClubId(club._id);
+        setSelectedEventClubName(club.clubName)
+        setIsModalOpenCreat(true);
+        reset({ title: '', description: '', eventDate: '', location: '', eventFee: '' });
+        console.log("Creating event for Club:", club.clubName, "ID:", club._id);
+    };
+
+    const handleCreatSubmit = async (eventData) => {
+        const finalEventData = {
+            ...eventData,
+            clubId: selectedEventClubId, 
+            clubName: selectedEventClubName,
+            managerEmail: user.email,  
+        };
+
+        try {
+            const res = await axiosSecure.post('/creatEvent', finalEventData); 
+            if (res.data.insertedId) {
+                Swal.fire({
+                    title: "Event Created!",
+                    text: "Your new club event has been successfully scheduled.",
+                    icon: "success",
+                    draggable: true
+                });
+                setIsModalOpenCreat(false);
+                queryClient.invalidateQueries(['myEvents']); 
+            }
+        } catch (error) {
+            console.error("Event creation failed:", error);
+            Swal.fire({
+                title: "Creation Failed",
+                text: "Could not create the event. Please check the form data.",
+                icon: "error"
+            });
+        }
+    };
+
     // --- Loading & Error States ---
     if (loading || isPending) return <Loding />;
 
@@ -80,6 +123,8 @@ const MyCreatClub = () => {
     );
 
     const totalClubs = clubs.length;
+
+
 
     return (
         <motion.div
@@ -115,6 +160,7 @@ const MyCreatClub = () => {
                             <tr>
                                 <th>#</th>
                                 <th>Club Name / Category</th>
+                                <th>Creat Event</th>
                                 <th>Fee </th>
                                 <th>Created At</th>
                                 <th>Actions</th>
@@ -127,6 +173,13 @@ const MyCreatClub = () => {
                                     <td>
                                         <div className="font-bold text-gray-800">{club.clubName}</div>
                                         <div className="text-sm opacity-50">{club.category}</div>
+                                    </td>
+                                    <td>
+                                        <button
+                                         onClick={() => heandleCreatFrom(club)}
+                                         className='btn text-white font-semibold bg-indigo-700'>
+                                            Creat Even
+                                        </button>
                                     </td>
                                     <td>
                                         <div className="font-mono text-gray-700">${club.membershipFee || '0'}</div>
@@ -212,6 +265,101 @@ const MyCreatClub = () => {
                                     className="btn bg-indigo-600 hover:bg-indigo-700 text-white border-0 rounded-lg shadow-md"
                                 >
                                     Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
+                </dialog>
+            )}
+            {isModalOpenCreat && (
+                <dialog open className="modal">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                        className="modal-box bg-white/80 backdrop-blur-lg shadow-xl border border-gray-200 rounded-xl max-w-lg"
+                    >
+                        <h3 className="font-bold text-2xl text-indigo-600 mb-6 text-center">📅 Create New Event</h3>
+
+                        {/* The form will submit all event details */}
+                        <form onSubmit={handleSubmit(handleCreatSubmit)} className="space-y-4">
+
+                            {/* CORRECTED LINE: Using selectedEventClubId from state */}
+                            <input type="hidden" {...register('clubId')} defaultValue={selectedEventClubId} />
+                            <input type="hidden" {...register('createdAt')} defaultValue={new Date().toISOString()} />
+                            <input type="hidden" {...register('managerEmail')} defaultValue={user.email} />
+
+
+                            {/* Event Title */}
+                            <div>
+                                <label className="font-semibold text-gray-700">Event Title</label>
+                                <input
+                                    type="text"
+                                    {...register('title', { required: 'Event Title is required' })}
+                                    className="input input-bordered w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    placeholder="e.g., Annual Meetup, Game Night"
+                                />
+                            </div>
+
+                            {/* Event Description */}
+                            <div>
+                                <label className="font-semibold text-gray-700">Description</label>
+                                <textarea
+                                    {...register('description', { required: 'Description is required' })}
+                                    className="textarea textarea-bordered w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 h-24"
+                                    placeholder="Provide details about the event agenda..."
+                                ></textarea>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* Event Date */}
+                                <div>
+                                    <label className="font-semibold text-gray-700">Event Date</label>
+                                    <input
+                                        type="date"
+                                        {...register('eventDate', { required: 'Event Date is required' })}
+                                        className="input input-bordered w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    />
+                                </div>
+
+                                {/* Event Location */}
+                                <div>
+                                    <label className="font-semibold text-gray-700">Location</label>
+                                    <input
+                                        type="text"
+                                        {...register('location', { required: 'Location is required' })}
+                                        className="input input-bordered w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        placeholder="Venue name or address"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Event Fee (if paid) */}
+                            <div>
+                                <label className="font-semibold text-gray-700">Event Fee (Optional)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    {...register('eventFee', { valueAsNumber: true })} // Use valueAsNumber for react-hook-form
+                                    className="input input-bordered w-full rounded-lg mt-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    placeholder="Enter Fee (e.g., 10 for $10.00). Leave blank if free."
+                                />
+                            </div>
+
+                            {/* Modal Action Buttons */}
+                            <div className="modal-action flex justify-between items-center pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsModalOpenCreat(false)}
+                                    className="btn bg-gray-200 text-gray-700 border-0 hover:bg-gray-300 rounded-lg transition duration-150"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn bg-indigo-600 hover:bg-indigo-700 text-white border-0 rounded-lg shadow-md transition duration-150"
+                                >
+                                    Create Event
                                 </button>
                             </div>
                         </form>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, Link } from 'react-router'; 
-import { MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
+import {MdOutlineCalendarMonth, MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import useRole from '../Hook/useRole';
 import { MdOutlinePayment } from "react-icons/md";
@@ -39,6 +39,7 @@ const Dashboard = () => {
         { to: '/dashboard/myjoinclub', icon: MdJoinInner, label: 'My Joined Clubs', category: 'Dashboard' },
         { to: '/dashboard/myCreatClub', icon: MdOutlineLibraryAdd, label: 'My Created Clubs', category: 'Dashboard' },
         { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment', category: 'Dashboard' },
+        { to: '/dashboard/myCreatEvent', icon: MdOutlineCalendarMonth, label: 'My Created Event', category: 'Dashboard' },
     ];
 
     // Add admin-specific links only if the role is 'admin'
