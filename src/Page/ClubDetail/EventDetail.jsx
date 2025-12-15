@@ -34,8 +34,6 @@ const EventDetail = () => {
     const { data: joinedEvent = [], isLoading: joinedLoading, } = useQuery({
         queryKey: ['joinedEvent', user?.email],
         queryFn: async () => {
-            // *** CHANGE THIS LINE ***
-            // Use the endpoint that retrieves events the user paid for/joined: /joinPaymentEvent
             const res = await axiosSecure.get(`/joinPaymentEvent?email=${user.email}`);
             return res.data;
         },
@@ -43,7 +41,6 @@ const EventDetail = () => {
         retry: false,
     });
 
-    // The rest of your logic remains correct based on your backend data structure:
     const alreadyEvent = Boolean(
         event?._id &&
         joinedEvent &&

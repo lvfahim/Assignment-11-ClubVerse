@@ -87,7 +87,7 @@ const MyCreatedEvent = () => {
                                 <th>Date & Time</th>
                                 <th>Location</th>
                                 <th>Fee</th>
-                                <th>Actions</th>
+                                <th>ManagerEmail</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,8 +116,7 @@ const MyCreatedEvent = () => {
                                         </div>
                                     </td>
                                     <td className="space-x-2">
-                                        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-sm btn-warning text-white">Edit</motion.button>
-                                        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn btn-sm btn-info text-white">Attendees</motion.button>
+                                        {event.managerEmail}
                                     </td>
                                 </motion.tr>
                             ))}
