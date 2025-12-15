@@ -22,7 +22,7 @@ const Hero = () => {
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
-              to="/clubs"
+              to="/aboutUs"
               className="px-6 py-3 bg-yellow-400 text-[#002455] font-semibold rounded-lg shadow-lg hover:bg-yellow-300 transition duration-300"
             >
               Explore Clubs

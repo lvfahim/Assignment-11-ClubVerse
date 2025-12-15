@@ -60,10 +60,10 @@ const MostChipEvent = () => {
         <div className='w-10/12 mx-auto'>
             <div className="p-4 sm:p-8 bg-gray-50">
                 <header className="mb-12 text-center pb-4">
-                    <h1 className="text-3xl font-extrabold text-blue-700 flex items-center">
+                    <h1 className="lg:text-3xl text-2xl font-extrabold text-blue-700 flex items-center">
                         <FaTag className="mr-3" /> Most Affordable Events
                     </h1>
-                    <p className="mt-2 text-gray-600 flex items-center">
+                    <p className="mt-2 text-gray-600 flex  items-center md:items-start">
                         <FaSortAmountDown className='mr-1' /> Events sorted by price, cheapest first.
                     </p>
                 </header>
@@ -114,10 +114,10 @@ const MostChipEvent = () => {
                             </div>
 
                             {/* Action Button */}
-                            <div className="p-6 pt-0 mt-auto">
+                            <div className="p-6  pt-0 mt-auto">
                                 <Link
                                     to={`/showAllEvent/${event._id}`}
-                                    className="w-full btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl  hover:bg-indigo-700 text-white border-0 py-3 rounded-lg font-semibold transition duration-150">
+                                    className="w-full py-8 btn bg-linear-to-l to-[#8ABEB9] from-[#002455] text-xl  hover:bg-indigo-700 text-white border-0 lg:py-3 rounded-lg font-semibold transition duration-150">
                                     View Details & Register
                                 </Link>
                             </div>
