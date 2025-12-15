@@ -5,6 +5,7 @@ import useAuth from '../../Hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { MdOutlineLocationOn, MdOutlineAttachMoney, MdOutlineDescription, MdEventNote, MdEventAvailable } from 'react-icons/md';
 import { FaCalendarAlt, FaUsers } from 'react-icons/fa';
+import { FaCheckCircle } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import Loding from '../../Error And Loding Page/Loding';
 import Swal from 'sweetalert2';
@@ -30,7 +31,29 @@ const EventDetail = () => {
         enabled: !!Id,
     });
 
-    if (authLoading || eventLoading) {
+    const { data: joinedEvent = [], isLoading: joinedLoading, } = useQuery({
+        queryKey: ['joinedEvent', user?.email],
+        queryFn: async () => {
+            // *** CHANGE THIS LINE ***
+            // Use the endpoint that retrieves events the user paid for/joined: /joinPaymentEvent
+            const res = await axiosSecure.get(`/joinPaymentEvent?email=${user.email}`);
+            return res.data;
+        },
+        enabled: !!user?.email,
+        retry: false,
+    });
+
+    // The rest of your logic remains correct based on your backend data structure:
+    const alreadyEvent = Boolean(
+        event?._id &&
+        joinedEvent &&
+        Array.isArray(joinedEvent) &&
+        joinedEvent.some(j => {
+            // j.eventId comes from the documents inserted into PaymentEventCollection/joinEventCollection
+            return String(j.eventId) === String(event._id);
+        })
+    );
+    if (authLoading || eventLoading || joinedLoading) {
         return <Loding></Loding>;
     }
 
@@ -61,7 +84,7 @@ const EventDetail = () => {
     const { title, description, eventDate, location, eventFee, clubName, managerEmail } = event;
 
     // --- Handler for Registration (Placeholder) ---
-    const handleRegister = async() => {
+    const handleRegister = async () => {
         if (!user?.email) {
             Swal.fire({
                 title: 'Please login first',
@@ -193,17 +216,34 @@ const EventDetail = () => {
                             )}
                         </div>
 
-                        <button
+
+                        {alreadyEvent ? (
+                            <button
+                                className="btn w-full bg-gray-500 text-white flex items-center justify-center gap-2 px-1 py-3 font-bold text-lg rounded-lg cursor-not-allowed"
+                                disabled
+                            >
+                                <FaCheckCircle className="text-2xl" />
+                                Already Registered
+                            </button>
+                        ) : (
+                            <button
+                                onClick={handleRegister}
+                                className={`btn w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2 px-1 py-3 font-bold text-lg rounded-lg transition-colors duration-300 transform shadow-lg `}
+                            >
+                                <MdEventAvailable className="text-2xl" />
+                                {eventFee > 0 ? 'Register and Pay' : 'Register Now (Free)'}
+                            </button>
+                        )}
+
+
+
+                        {/* <button
                             onClick={handleRegister}
-                            className={`btn w-full flex items-center justify-center gap-2 px-1 py-3 font-bold text-lg rounded-lg transition-colors duration-300 transform shadow-lg 
-                                ${eventFee > 0
-                                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                                }`}
+                            className={`btn w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2 px-1 py-3 font-bold text-lg rounded-lg transition-colors duration-300 transform shadow-lg `}
                         >
                             <MdEventAvailable className="text-2xl" />
                             {eventFee > 0 ? 'Register and Pay' : 'Register Now (Free)'}
-                        </button>
+                        </button> */}
 
                         <p className="text-xs text-gray-500">
                             {user ? `Logged in as ${user.email}` : 'Log in to register.'}

@@ -17,7 +17,7 @@ const ClubDetail = () => {
     const { user, loading: authLoading } = useAuth();
     const navigate = useNavigate();
 
-    const {data: club,isLoading: clubLoading,isError: clubError,error: clubErrorObj,} = useQuery({
+    const {data: club,isLoading: clubLoading,isError: clubError,} = useQuery({
         queryKey: ['clubDetail', Id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/clubs/${Id}`);
@@ -25,7 +25,7 @@ const ClubDetail = () => {
         },
         enabled: !!Id,
     });
-    const {data: joinedClubs = [],isLoading: joinedLoading,isError: joinedError,} = useQuery({
+    const {data: joinedClubs = [],isLoading: joinedLoading,} = useQuery({
         queryKey: ['joinedClubs', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/joinMember?email=${user.email}`);
