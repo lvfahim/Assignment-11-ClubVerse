@@ -3,6 +3,7 @@ import Hero from './PageComponet/Hero';
 import WhoItWork from './PageComponet/WhoItWork';
 import MostOldClub from './PageComponet/MostOldClub';
 import Contact from './PageComponet/Contact';
+import MostChipEvent from './PageComponet/MostChipEvent';
 
 const Home = () => {
     return (
@@ -19,6 +20,9 @@ const Home = () => {
 
                 <div className="py-10">
                     <MostOldClub />
+                </div>
+                <div className="py-10">
+                    <MostChipEvent />
                 </div>
                 <div className="pt-10">
                     <h1 className='text-center font-semibold text-5xl'>Contact Us</h1>

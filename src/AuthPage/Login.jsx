@@ -22,8 +22,7 @@ const Login = () => {
     };
     const heandleFrom = (data) => {
         Login(data.email, data.password)
-            .then(result => {
-                console.log(result)
+            .then(() => {
                 navigate(`${location.state ? location.state : '/'}`)
             })
             .catch(error => {
@@ -50,7 +49,7 @@ const Login = () => {
     const heandleFormGoogle = () => {
         Google()
             .then(result => {
-                // console.log(result)
+
                 const userInfo = {
                     email: result.user.email,
                     displayName: result.user.displayName,

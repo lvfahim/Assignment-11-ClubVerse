@@ -25,7 +25,7 @@ const Regester = () => {
         const profileImg = data.photo[0]
         Register(data.email, data.password)
             .then(result => {
-                console.log(result)
+
                 const formData = new FormData();
                 formData.append('image', profileImg)
                 const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_hosting}`
@@ -65,7 +65,6 @@ const Regester = () => {
     const heandleFormGoogle = () => {
         Google()
             .then(result => {
-                console.log(result)
                   const userInfo = {
                     email: result.user.email,
                     displayName: result.user.displayName,
@@ -73,8 +72,7 @@ const Regester = () => {
                 }
 
                 Axios.post('/users', userInfo)
-                    .then(res => {
-                        console.log('user data has been stored', res.data)
+                    .then(() => {
                         navigate(location.state || '/');
                     })
                 Swal.fire({

@@ -80,7 +80,6 @@ const MyCreatClub = () => {
         setSelectedEventClubName(club.clubName)
         setIsModalOpenCreat(true);
         reset({ title: '', description: '', eventDate: '', location: '', eventFee: '' });
-        console.log("Creating event for Club:", club.clubName, "ID:", club._id);
     };
 
     const handleCreatSubmit = async (eventData) => {

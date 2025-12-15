@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink, Outlet, Link } from 'react-router'; 
+import { NavLink, Outlet, Link } from 'react-router';
 import { MdOutlinePayments, MdOutlineBeenhere, MdOutlineEventAvailable, MdOutlineCalendarMonth, MdGavel, MdVerified, MdOutlineLibraryAdd, MdJoinInner, MdHome, MdSettings, MdDashboard, MdOutlineCreate, MdPeopleAlt, MdArticle } from 'react-icons/md';
 import { motion } from 'framer-motion';
+import { BsFillCalendar3EventFill } from "react-icons/bs";
+import { FaCcDinersClub } from "react-icons/fa";
 import useRole from '../Hook/useRole';
 import { MdOutlinePayment } from "react-icons/md";
 import Loding from '../Error And Loding Page/Loding';
@@ -39,17 +41,24 @@ const Dashboard = () => {
     let dashboardLinks = [
         { to: '/dashboard/myjoinclub', icon: MdJoinInner, label: 'My Joined Clubs', category: 'Dashboard' },
         { to: '/dashboard/myCreatClub', icon: MdOutlineLibraryAdd, label: 'My Created Clubs', category: 'Dashboard' },
-        { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment club', category: 'Dashboard' },
-        { to: '/dashboard/myJoinEvent', icon: MdOutlineBeenhere, label: 'My Join Event', category: 'Dashboard' },
-        { to: '/dashboard/myCreatEvent', icon: MdOutlineCalendarMonth, label: 'My Created Event', category: 'Dashboard' },
+        { to: '/dashboard/myPaymentClub', icon: MdOutlinePayment, label: 'My Payment clubs', category: 'Dashboard' },
+        { to: '/dashboard/myJoinEvent', icon: MdOutlineBeenhere, label: 'My Join Events', category: 'Dashboard' },
+        { to: '/dashboard/myCreatEvent', icon: MdOutlineCalendarMonth, label: 'My Created Events', category: 'Dashboard' },
         { to: '/dashboard/myPaymentEvent', icon: MdOutlinePayments, label: 'My Payment Event', category: 'Dashboard' },
     ];
 
+    if (role === 'manager' || role === 'admin') {
+        dashboardLinks = [
+            ...dashboardLinks,
+            { to: '/dashboard/allPaymentClub', icon: FaCcDinersClub, label: 'All Payment Clubs', category: 'Dashboard' },
+            { to: '/dashboard/allPaymentEvent', icon: BsFillCalendar3EventFill, label: 'All Payment Event', category: 'Dashboard' },
+        ];
+    }
     // Add admin-specific links only if the role is 'admin'
     if (role === 'admin') {
         dashboardLinks = [
             ...dashboardLinks,
-            { to: '/dashboard/approveClub', icon: MdVerified, label: 'Approve Club', category: 'Dashboard' },
+            { to: '/dashboard/approveClub', icon: MdVerified, label: 'Approve Clubs', category: 'Dashboard' },
             { to: '/dashboard/manageUser', icon: MdGavel, label: 'Management User', category: 'Dashboard' },
         ];
     }

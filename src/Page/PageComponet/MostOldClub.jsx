@@ -14,7 +14,7 @@ const MostOldClub = () => {
     const { data: clubs = [], isLoading, isError } = useQuery({
         queryKey: ['mostOldClubs'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/someClubs'); // replace with correct endpoint
+            const res = await axiosSecure.get('/someClubs'); 
             return res.data;
         }
     });
