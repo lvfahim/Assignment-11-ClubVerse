@@ -9,6 +9,10 @@
 👉 Client Link : https://clubverselv.netlify.app
 👉 Server Link : https://assigment-11-server-seven.vercel.app
 
+
+Admin Email : test@user.com
+Admin Pass : 123456Testser
+
 ---
 
 ## ✨ Core Features & Highlights
