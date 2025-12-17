@@ -6,8 +6,8 @@
 
 ## 🌐 Live Demo
 
-👉 [https://your-live-site-url.com](https://your-live-site-url.com)
-*(Replace this with your actual deployed link)*
+👉 Client Link : https://clubverselv.netlify.app
+👉 Server Link : https://assigment-11-server-seven.vercel.app
 
 ---
 
