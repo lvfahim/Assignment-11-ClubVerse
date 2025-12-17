@@ -31,6 +31,7 @@ import PaymentCancelEvent from "../Page/PaymentEvent/PaymentCancelEvent";
 import PaymentSuccessEvent from "../Page/PaymentEvent/PaymentSuccessEvent";
 import AllPaymentForClubs from "../Page/Dashboard/AllPaymentForClubs";
 import AllPaymentForEvent from "../Page/Dashboard/AllPaymentForEvent";
+import ManagerProvider from "../Provider/ManagerProvider";
 
 const router = createBrowserRouter([
     {
@@ -150,11 +151,11 @@ const router = createBrowserRouter([
             },
             {
                 path:'/dashboard/allPaymentClub',
-                element:<AdminRoute><AllPaymentForClubs></AllPaymentForClubs></AdminRoute>
+                element:<ManagerProvider><AllPaymentForClubs></AllPaymentForClubs></ManagerProvider>
             },
             {
                 path:'/dashboard/allPaymentEvent',
-                element:<AdminRoute><AllPaymentForEvent></AllPaymentForEvent></AdminRoute>
+                element:<ManagerProvider><AllPaymentForEvent></AllPaymentForEvent></ManagerProvider>
             }
         ]
     }

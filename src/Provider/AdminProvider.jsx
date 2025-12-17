@@ -8,15 +8,11 @@ import Loding from '../Error And Loding Page/Forbidden';
 
 const AdminRoute = ({ children }) => {
     const { loading } = useAuth();
-    const { role, roleLoading } = useRole()
+    const { role, roleLoading } = useRole();
 
-    if (loading || roleLoading) {
-        return <Loding></Loding>
-    }
+    if (loading || roleLoading) return <Loding />;
 
-    if (role !== 'admin') {
-        return <Forbidden></Forbidden>
-    }
+    if (role !== 'admin') return <Forbidden />;
 
     return children;
 };
