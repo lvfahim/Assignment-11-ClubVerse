@@ -60,7 +60,7 @@ const ShowAllEvent = () => {
     return (
         <div className="w-full py-16 bg-gray-50">
             <div className="container mx-auto px-4 md:px-8">
-
+                <title>All Events</title>
                 {/* === Page Header === */}
                 <h1 className="text-4xl font-extrabold  mb-2 border-b-4  pb-3 flex items-center">
                     <FaCalendarCheck className="mr-3 " /> Discover All Events ({totalEvents})

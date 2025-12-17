@@ -37,6 +37,7 @@ const EventRevenueChart = ({ payments }) => {
                 <FaDollarSign className="text-green-500 mr-2" />
                 Event Revenue Distribution
             </h2>
+            <title>All payment for Events</title>
             {chartData.length === 0 ? (
                 <p className="text-gray-500">No revenue data to display for events.</p>
             ) : (

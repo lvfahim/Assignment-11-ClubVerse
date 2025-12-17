@@ -43,7 +43,7 @@ const ShowAllClub = () => {
             <h2 className="text-4xl font-extrabold mb-12 text-center text-gray-800">
                 🌐 Explore All Clubs ({clubs.length})
             </h2>
-
+            <title>All Clubs</title>
             <motion.div
                 className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
                 variants={containerVariants}

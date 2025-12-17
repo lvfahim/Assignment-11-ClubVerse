@@ -38,7 +38,7 @@ const MyJoinedClubs = () => {
             <p className="text-gray-500 mb-8">
                 Manage your club memberships and track the status of your applications.
             </p>
-
+            <title>My Join clubs</title>
             {totalClubs === 0 ? (
                 <div className="text-center py-20 bg-gray-50 rounded-lg">
                     <FaUsers className="text-6xl text-gray-400 mx-auto mb-4" />

@@ -68,6 +68,7 @@ const CreateClub = () => {
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
+            <title>Creat Club</title>
             <motion.form
                 ref={formRef}
                 onSubmit={handleSubmit(handleForm)}

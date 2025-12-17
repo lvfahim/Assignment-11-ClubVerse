@@ -36,7 +36,7 @@ const WhyJoin = () => {
     return (
         <div className="w-full pt-24 pb-24 bg-white"> {/* Changed background to white for cleaner look */}
             <div className="max-w-6xl mx-auto px-6 text-center">
-
+                <title>Why Join</title>
                 {/* --- Title Section --- */}
                 <motion.p
                     initial={{ opacity: 0, y: -20 }}

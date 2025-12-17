@@ -121,6 +121,7 @@ const ManageUser = () => {
             <h1 className="text-3xl font-extrabold text-gray-800 mb-2 border-b pb-2">
                 👤 Manage All Users ({totalUsers})
             </h1>
+            <title>Manage Users</title>
             <p className="text-gray-500 mb-8">
                 View and manage user roles within the platform.
             </p>

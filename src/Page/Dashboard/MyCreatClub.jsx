@@ -135,6 +135,7 @@ const MyCreatClub = () => {
             <h1 className="text-3xl font-extrabold text-indigo-700 mb-2 border-b pb-2">
                 🏆 My Created Clubs ({totalClubs})
             </h1>
+            <title>My Creat Clubs</title>
             <p className="text-gray-500 mb-8">
                 Manage your club settings, view applications, and monitor membership.
             </p>

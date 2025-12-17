@@ -48,7 +48,7 @@ const MyJoinEvent = () => {
                     You have successfully registered for **{totalEvents}** {totalEvents === 1 ? 'event' : 'events'}.
                 </p>
             </header>
-
+            <title>My join Events</title>
             {totalEvents === 0 ? (
                 <div className="text-center p-10 border-4 border-dashed border-gray-300 rounded-xl bg-white">
                     <FaCalendarCheck className="text-6xl text-gray-400 mx-auto mb-4" />

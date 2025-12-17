@@ -57,6 +57,7 @@ const MyCreatedEvent = () => {
             <h1 className="text-3xl font-extrabold text-indigo-700 mb-2 border-b pb-2 flex items-center">
                 <FaRegCalendarAlt className="mr-3" /> My Created Events ({totalEvents})
             </h1>
+            <title>My create Events</title>
             <p className="text-gray-500 mb-8">
                 View and manage the events you have scheduled for your clubs.
             </p>

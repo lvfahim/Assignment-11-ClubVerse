@@ -37,6 +37,7 @@ const ClubRevenueChart = ({ payments }) => {
                 <FaDollarSign className="text-green-500 mr-2" />
                 Club Revenue Distribution (Live)
             </h2>
+            <title>My Payments for all Clubs</title>
             {chartData.length === 0 ? (
                 <p className="text-gray-500">No revenue data to display.</p>
             ) : (

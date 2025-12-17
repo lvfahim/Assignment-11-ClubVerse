@@ -6,7 +6,7 @@ const AboutUs = () => {
   return (
     <div className="w-full pt-36 mb-44 bg-white">
       <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
-
+        <title>About US</title>
         {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}

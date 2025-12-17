@@ -35,7 +35,7 @@ const MyPaymentClub = () => {
     return (
         <div className="p-4 md:p-8">
             <h2 className="text-3xl font-bold mb-6">💳 My Paid Clubs ({paidClubs.length})</h2>
-
+            <title>My payment Clubs</title>
             {paidClubs.length === 0 ? (
                 <p className="text-lg text-gray-500">You haven't paid for any clubs yet.</p>
             ) : (

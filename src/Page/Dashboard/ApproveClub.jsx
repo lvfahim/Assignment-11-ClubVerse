@@ -98,6 +98,7 @@ const ApproveClub = () => {
             <h1 className="text-3xl font-extrabold text-blue-700 mb-2 border-b pb-2">
                 🛡️ Club Approval Queue ({pendingClubsCount})
             </h1>
+            <title>Approve Clubs</title>
             <p className="text-gray-500 mb-8">
                 Review club applications and take action to approve or reject them.
             </p>

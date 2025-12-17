@@ -40,7 +40,7 @@ const Blog = () => {
     return (
         <div className="w-full py-20 bg-gray-50">
             <div className="max-w-6xl mx-auto px-6 text-center">
-
+                <title>Blog</title>
                 {/* Section Title */}
                 <motion.h2
                     initial={{ opacity: 0, y: -30 }}

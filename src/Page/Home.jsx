@@ -8,7 +8,7 @@ import MostChipEvent from './PageComponet/MostChipEvent';
 const Home = () => {
     return (
         <div className='mt-10 bg-gray-50'>
-
+            <title>Home</title>
             <div className="pb-10">
                 <Hero />
             </div>
